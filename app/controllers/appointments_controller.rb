@@ -1,11 +1,11 @@
-class AppointmentsController < ApplicationController
+class AppointmentsController < ProtectedController
   before_action :authenticate
   before_action :set_appointment, only: [:show, :update, :destroy]
 
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    @appointments = @current_user.appointments
 
     render json: @appointments
   end
@@ -19,7 +19,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
-    @appointment = Appointment.new(appointment_params)
+    @appointment = current_user.appointments.build(appointment_params)
 
     if @appointment.save
       render json: @appointment, status: :created, location: @appointment
