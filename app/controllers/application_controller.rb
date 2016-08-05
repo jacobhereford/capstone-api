@@ -47,6 +47,12 @@ class ApplicationController < ActionController::API
     render json: { error: { message: 'Not Found' } }, status: :not_found
   end
 
+def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
+    headers['Access-Control-Max-Age'] = "1728000"
+end
   # Restrict visibility of these methods
   private :authenticate, :current_user, :set_current_user, :record_not_found
   private :ssl_configured?, :api_request_settings
